@@ -1,51 +1,28 @@
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
-using PrimeService.Tests.Utils;
+using OpenQA.Selenium.Chrome;
+using PrimeService.Utils;
 
-namespace PrimeService.Tests.PageObjects
+namespace PrimeService.PageObjects
 {
     public class Objects
     {
-        private IWebDriver _driver;
-        private Browser _browser;
-        private IConfiguration _configuration;
-
-        public Objects(
-            IConfiguration configuration, Browser browser)
-        {
-            _configuration = configuration;
-            _browser = browser;
-
-            string caminhoDriver = null;
-            if (browser == Browser.Firefox)
-            {
-                caminhoDriver =
-                    _configuration.GetSection("Selenium:CaminhoDriverFirefox").Value;
-            }
-            else if (browser == Browser.Chrome)
-            {
-                caminhoDriver =
-                    _configuration.GetSection("Selenium:CaminhoDriverChrome").Value;
-            }
-
-            _driver = WebDriverFactory.CreateWebDriver(
-                browser, caminhoDriver, true);
-        }
+        private IWebDriver _driver = new ChromeDriver();
         public void CarregarPagina()
         {
-            _driver.LoadPage(_configuration.GetSection("Selenium:UrlTelaConversaoDistancias").Value);
+            _driver.LoadPage("https://ewertonluan.github.io/curso_JavaScript/");
+            
         }
-
         public void AddNewItem(){
             
-            _driver.SetText(By.Id("desc"),"Camisa");
-            _driver.SetText(By.Id("amount"),"13");
-            _driver.SetText(By.Id("value"),"12");
-            _driver.ClickButtom(By.Id("add"));
+            _driver.SetText(By.Id("desc"),"Camisa", "Description");
+            _driver.SetText(By.Id("amount"),"13", "Amount");
+            _driver.SetText(By.Id("value"),"12", "Value");
+            _driver.ClickButton(By.Id("add"),"Add");
+            _driver.ErroAdd();
         }
-
-        public void DeletItem(){
-            _driver.DeletButtom(1);
+        public void DeleteItem(){
+            _driver.DeleteButton(1);
         }
         public void Fechar()
         {
