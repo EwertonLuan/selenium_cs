@@ -18,16 +18,12 @@ namespace PrimeService
 
         public static void  automation_selenium()
         {
-            Console.WriteLine("hello");
             Objects tela = new Objects();
 
             tela.CarregarPagina();
             tela.AddNewItem();
-            tela.DeleteItem();
-            
-            tela.Fechar();
-
-            
+            tela.DeleteItem();            
+            tela.Fechar();            
         }
     }
 }
